@@ -1,0 +1,18 @@
+Data Set and Features
+
+Our data set consists of the final orbital states of ~10000 Vplanet simulations ... such as semi-major axis and orbital inclination ETC. In order to maximize the the accuracy of our models, we created additional features that are physically meaningful functions of initial conditions for a given simulation. We created an additional 14 physically-motivated features and call this augmented feature set "Physical".  We synthesized more features by transforming the Physical feature set to all monomials of degree 2 including all cross-terms.  This transformation, still just a function of initial conditions, yielded a total of about 200 features per sample.  We call this augmented feature set "Polynomial".
+
+
+When can we stop?
+
+Ideally, an optimally trained model will fit the data sufficiently well such that they will replace running computationally expensive simulations.
+
+We performed regression on our data set using a suite of methods such as ordinary least squares, ridge regression, ensemble methods, as well as gaussian process regression. To quantify model performance we used scikit-learn's coefficient of determination (R^2) score where an R^2 score of one corresponds to a perfect fit. 
+
+We fit our data using ordinary least squares (OLS) and ridge regression (RR) to gauge the importance of regularization.  We trained each model on a training subset containing 8,000 simulations and tested on the remaining 2,000. For RR, we performed randomized 5-fold cross validation on the training set over 50 logarithmically spaced bins for a regularization constant in the range 10^{-10} through 10 to optimize the regularization parameter.  We found a parameter of about 10^{-7} yielded optimal performance.  Once fit, we evaluated both models on the training and testing set and recorded the mean squared error (MSE) and R^2 All fits and hyperparameter optimization made use of scikit-learn. We ran the linear models on both the Physical data as well as the Polynomial data and found both models perform much better on the expanded data set. 
+
+We performed fits using gaussian processes on the Physical data (as the Polynomial data has too many features to run efficiently on the GPs). We tested out three different kernels in combination with white noise. The different kernels performed about the same. In general the GPs perform better than the linear models but are very slow to run.
+
+We also used tree ensemble methods such as the Random Forest regressor and XGBoost. To optimize these methods we used scikit-learn with a k=5 cross validation for tuning hyper parameters. As can be seen in the table, the tree ensemble methods perform much better than the linear models or gaussian processes. 
+
+We feel that with more data to train the XGBoost method and more optimization we can get to a level of performance where we no longer have to run simulations
