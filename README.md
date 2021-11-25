@@ -1,5 +1,6 @@
 # astrokriging
 
+* see the paper here: <https://github.com/mattcwilde/astrokriging/blob/main/astrokriging.pdf?>
 * requires the use of <https://github.com/VirtualPlanetaryLaboratory/bigplanet.git>
 
 For simulations involving a large number of initial conditions, it is infeasible to sufficiently sample parameter using convential methods such as grid searches or random sampling due to the curse of dimensionality. Other methods must be em- ployed in order sufficiently sample parameter space to make statistical inferences about simulation results. We model the results of 10,000 simulations involving tidal and dynamical interactions between theoretical planets in the Proxima Cen- tauri system ([1]) as a function of initial conditions. Using fit uncertainties derived from bootstrapping and Gaussian process (GP) regression, we identify regions in parameter space where our models are uncertain and hence where additional simu- lations are required. We find our linear regression bootstrapping heuristic decently approximates the more robust GP uncertainties. We consider a parameter search complete if a model can accurately predict the results of unseen data above some user-defined threshold. We test numerous models and find that ensemble methods perform well with XGBoost ([2]) yielding the best performance.
